@@ -1,0 +1,37 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"gcWpgws4mi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">GST Singapore</span>\",\"col\":12}},{\"id\":\"HWZwRtbClR\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\" style=\\\"\\\">Settings</span>\",\"col\":12}},{\"id\":\"K0eV1i3EoX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Singapore GST Settings\",\"col\":3}}]",
+ "creation": "2025-12-15 18:55:51.898232",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "money-coins-1",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "GST Singapore",
+ "links": [],
+ "modified": "2025-12-15 18:59:12.870097",
+ "modified_by": "Administrator",
+ "module": "Singapore Compliance",
+ "name": "GST Singapore",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Accounting",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 4.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Singapore GST Settings",
+   "link_to": "Singapore GST Settings",
+   "type": "DocType"
+  }
+ ],
+ "title": "GST Singapore"
+}
