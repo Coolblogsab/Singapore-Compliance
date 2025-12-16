@@ -84,7 +84,7 @@ doctype_js = {"Process Statement Of Accounts": "public/js/process_statement_of_a
 # ------------
 
 # before_install = "singapore_compliance.install.before_install"
-# after_install = "singapore_compliance.install.after_install"
+after_install = "singapore_compliance.install.setup_ledgers_and_template"
 
 # Uninstallation
 # ------------
@@ -138,11 +138,9 @@ doctype_js = {"Process Statement Of Accounts": "public/js/process_statement_of_a
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"Company": {
-#         "after_insert": "singapore_compliance.events.company.setup_charts_of_account_for_new_company"
-#     }
-# }
+doc_events = {
+	"Company": {"after_insert": "singapore_compliance.events.company.setup_charts_of_account_for_new_company"}
+}
 
 # Scheduled Tasks
 # ---------------
