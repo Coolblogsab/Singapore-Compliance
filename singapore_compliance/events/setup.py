@@ -240,3 +240,4 @@ def update_gst_settings(params):
 
 	doc.flags.ignore_permissions = True
 	doc.save()
+	frappe.db.commit()
