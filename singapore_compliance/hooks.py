@@ -20,7 +20,7 @@ app_license = "mit"
 # 		"has_permission": "singapore_compliance.api.permission.has_app_permission"
 # 	}
 # ]
-
+setup_wizard_stages = "singapore_compliance.events.setup.get_setup_wizard_stages"
 # Includes in <head>
 # ------------------
 
@@ -139,11 +139,9 @@ doctype_js = {"Process Statement Of Accounts": "public/js/process_statement_of_a
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
+# 	"Company": {
+#         "after_insert": "singapore_compliance.events.company.setup_charts_of_account_for_new_company"
+#     }
 # }
 
 # Scheduled Tasks

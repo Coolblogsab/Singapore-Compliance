@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"gcWpgws4mi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">GST Singapore</span>\",\"col\":12}},{\"id\":\"HWZwRtbClR\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\" style=\\\"\\\">Settings</span>\",\"col\":12}},{\"id\":\"K0eV1i3EoX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Singapore GST Settings\",\"col\":3}},{\"id\":\"5oVnOxMENW\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports</b></span>\",\"col\":12}},{\"id\":\"mvxGyPkh6T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst Detail Report\",\"col\":3}},{\"id\":\"X2WydUZHz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst F5 Summary Report\",\"col\":3}}]",
+ "content": "[{\"id\":\"gcWpgws4mi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">GST Singapore</span>\",\"col\":12}},{\"id\":\"HWZwRtbClR\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\" style=\\\"\\\">Settings</span>\",\"col\":12}},{\"id\":\"K0eV1i3EoX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Singapore GST Settings\",\"col\":3}},{\"id\":\"5oVnOxMENW\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports</b></span>\",\"col\":12}},{\"id\":\"mvxGyPkh6T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst Detail Report\",\"col\":3}},{\"id\":\"X2WydUZHz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst F5 Summary Report\",\"col\":3}},{\"id\":\"N4rrZO6OpV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Official Receipt\",\"col\":3}},{\"id\":\"hE9vI5_jZa\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Voucher\",\"col\":3}},{\"id\":\"eR6Doxd9O8\",\"type\":\"card\",\"data\":{\"card_name\":\"Documents\",\"col\":4}}]",
  "creation": "2025-12-15 18:55:51.898232",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,8 +12,48 @@
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "GST Singapore",
- "links": [],
- "modified": "2025-12-15 19:29:25.811733",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Documents",
+   "link_count": 3,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Singapore GST Settings",
+   "link_count": 0,
+   "link_to": "Singapore GST Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Official Receipt",
+   "link_count": 0,
+   "link_to": "Official Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Voucher",
+   "link_count": 0,
+   "link_to": "Payment Voucher",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-12-15 19:37:45.970525",
  "modified_by": "Administrator",
  "module": "Singapore Compliance",
  "name": "GST Singapore",
@@ -43,10 +83,26 @@
   {
    "color": "Grey",
    "doc_view": "List",
+   "label": "Official Receipt",
+   "link_to": "Official Receipt",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Gst F5 Summary Report",
    "link_to": "GST F5 Summary Report",
    "report_ref_doctype": "Sales Invoice",
    "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Payment Voucher",
+   "link_to": "Payment Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
   }
  ],
  "title": "GST Singapore"
