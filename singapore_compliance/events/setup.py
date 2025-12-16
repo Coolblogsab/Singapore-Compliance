@@ -172,6 +172,9 @@ def get_setup_wizard_stages(params=None):
 	if frappe.db.exists("Account"):
 		return []
 
+	if frappe.db.exists("Company"):
+		return []
+
 	return [
 		{
 			"status": _("Setting up Singapore Compliance"),
@@ -180,7 +183,11 @@ def get_setup_wizard_stages(params=None):
 				{
 					"fn": run_sg_tax_setup,
 					"args": params,
-				}
+				},
+				{
+					"fn": update_gst_settings,
+					"args": params,
+				},
 			],
 		}
 	]
@@ -191,3 +198,45 @@ def run_sg_tax_setup(params):
 	from singapore_compliance.events.setup import create_charts_of_accounts
 
 	create_charts_of_accounts(company)
+
+
+def update_gst_settings(params):
+	company = params.company_name
+	if not frappe.db.exists("Singapore GST Settings", "Singapore GST Settings"):
+		return
+
+	doc = frappe.get_single("Singapore GST Settings")
+	box_1 = frappe.db.get_value("Account", {"account_name": "Output-GST-SR9"}, "name")
+	box_2 = frappe.db.get_value("Account", {"account_name": "Output-GST-ZR"}, "name")
+	box_3 = frappe.db.get_value("Account", {"account_name": "Output-GST-ES33"}, "name")
+	box_5 = frappe.db.get_value("Account", {"account_name": "Input-GST-TX9"}, "name")
+	box_5_1 = frappe.db.get_value("Account", {"account_name": "Input-GST-ZP"}, "name")
+	box_5_2 = frappe.db.get_value("Account", {"account_name": "Input-GST-IM9"}, "name")
+
+	default_income_account = frappe.db.get_value("Account", {"account_name": "Other Income"}, "name")
+	default_bank_account = frappe.db.get_value("Account", {"account_name": "Sales Income"}, "name")
+	if not default_bank_account:
+		default_bank_account = frappe.db.get_value("Account", {"account_name": "Management Income"}, "name")
+
+	exchange_gain_loss_account = frappe.db.get_value(
+		"Account", {"account_name": "Currency Exchange Differences"}, "name"
+	)
+
+	doc.append(
+		"sgst_details",
+		{
+			"company": company,
+			"box_1": box_1,
+			"box_2": box_2,
+			"box_3": box_3,
+			"box_5": box_5,
+			"box_5_1": box_5_1,
+			"box_5_2": box_5_2,
+			"other_income": default_income_account,
+			"bank_interest_income": default_bank_account,
+			"realised_exchange_gainloss": exchange_gain_loss_account,
+		},
+	)
+
+	doc.flags.ignore_permissions = True
+	doc.save()
