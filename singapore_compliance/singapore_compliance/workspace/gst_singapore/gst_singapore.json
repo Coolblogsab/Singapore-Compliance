@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"gcWpgws4mi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">GST Singapore</span>\",\"col\":12}},{\"id\":\"HWZwRtbClR\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\" style=\\\"\\\">Settings</span>\",\"col\":12}},{\"id\":\"K0eV1i3EoX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Singapore GST Settings\",\"col\":3}},{\"id\":\"5oVnOxMENW\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports</b></span>\",\"col\":12}},{\"id\":\"mvxGyPkh6T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst Detail Report\",\"col\":3}},{\"id\":\"X2WydUZHz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Gst F5 Summary Report\",\"col\":3}},{\"id\":\"N4rrZO6OpV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Official Receipt\",\"col\":3}},{\"id\":\"hE9vI5_jZa\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Voucher\",\"col\":3}},{\"id\":\"eR6Doxd9O8\",\"type\":\"card\",\"data\":{\"card_name\":\"Documents\",\"col\":4}}]",
+ "content": "[{\"id\":\"gcWpgws4mi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">GST Singapore</span>\",\"col\":12}},{\"id\":\"HWZwRtbClR\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\" style=\\\"\\\">Settings</span>\",\"col\":12}},{\"id\":\"K0eV1i3EoX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Singapore GST Settings\",\"col\":3}},{\"id\":\"5oVnOxMENW\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports</b></span>\",\"col\":12}},{\"id\":\"mvxGyPkh6T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"GST Detail Report\",\"col\":3}},{\"id\":\"X2WydUZHz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"GST F5 Summary Report\",\"col\":3}},{\"id\":\"N4rrZO6OpV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Official Receipt\",\"col\":3}},{\"id\":\"hE9vI5_jZa\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Voucher\",\"col\":3}},{\"id\":\"eR6Doxd9O8\",\"type\":\"card\",\"data\":{\"card_name\":\"Documents\",\"col\":4}}]",
  "creation": "2025-12-15 18:55:51.898232",
  "custom_blocks": [],
  "docstatus": 0,
@@ -75,7 +75,7 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Gst Detail Report",
+   "label": "GST Detail Report",
    "link_to": "GST Detail Report",
    "report_ref_doctype": "Sales Invoice",
    "type": "Report"
@@ -91,7 +91,7 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Gst F5 Summary Report",
+   "label": "GST F5 Summary Report",
    "link_to": "GST F5 Summary Report",
    "report_ref_doctype": "Sales Invoice",
    "type": "Report"
