@@ -132,9 +132,9 @@ def create_charts_of_accounts(company):
 	# PURCHASE TAX TEMPLATES
 	# -----------------------------
 	purchase_tax_templates = [
-		{"name": "Purchase-GST-TX9", "account": "Input-GST-TX9", "rate": 9},
-		{"name": "Purchase-GST-ZP", "account": "Input-GST-ZP", "rate": 0},
-		{"name": "Purchase-GST-IM9", "account": "Input-GST-IM9", "rate": 9},
+		{"name": "GST-TX9", "account": "Input-GST-TX9", "rate": 9},
+		{"name": "GST-ZP", "account": "Input-GST-ZP", "rate": 0},
+		{"name": "GST-IM9", "account": "Input-GST-IM9", "rate": 9},
 	]
 
 	for row in purchase_tax_templates:
