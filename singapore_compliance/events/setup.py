@@ -106,7 +106,7 @@ def create_charts_of_accounts(company):
 
 		if not account_head:
 			continue
-		
+
 		default = 0
 		if row["name"] == "GST-SR9":
 			default = 1
@@ -116,7 +116,7 @@ def create_charts_of_accounts(company):
 				"doctype": "Sales Taxes and Charges Template",
 				"title": row["name"],
 				"company": company,
-				"is_default" : default,
+				"is_default": default,
 				"taxes": [
 					{
 						"charge_type": "On Net Total",
@@ -152,17 +152,17 @@ def create_charts_of_accounts(company):
 
 		if not account_head:
 			continue
-		
+
 		default = 0
 		if row["account"] == "Input-GST-IM9":
 			default = 1
-		
+
 		frappe.get_doc(
 			{
 				"doctype": "Purchase Taxes and Charges Template",
 				"title": row["name"],
 				"company": company,
-				"is_default" : default,
+				"is_default": default,
 				"taxes": [
 					{
 						"charge_type": "On Net Total",
@@ -224,7 +224,9 @@ def update_gst_settings(params):
 	box_5_2 = frappe.db.get_value("Account", {"account_name": "Input-GST-IM9"}, "name")
 
 	default_income_account = frappe.db.get_value("Account", {"account_name": "Other Income"}, "name")
-	default_bank_interest_account = frappe.db.get_value("Account", {"account_name": "Fixed Deposit Interest Earned"}, "name")	
+	default_bank_interest_account = frappe.db.get_value(
+		"Account", {"account_name": "Fixed Deposit Interest Earned"}, "name"
+	)
 
 	exchange_gain_loss_account = frappe.db.get_value(
 		"Account", {"account_name": "Currency Exchange Differences"}, "name"

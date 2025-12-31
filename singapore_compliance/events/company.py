@@ -44,8 +44,10 @@ def setup_charts_of_account_for_new_company(doc, method=None):
 	else:
 		frappe.enqueue(create_chart_of_accounts_in_rq, doc=doc, queue="short")
 
+
 def create_chart_of_accounts_in_rq(doc):
 	import time
+
 	time.sleep(3)
 
 	tax_assets_parent = frappe.db.get_value(
