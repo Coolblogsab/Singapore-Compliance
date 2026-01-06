@@ -10,20 +10,22 @@ frappe.query_reports["GST Detail Report"] = {
 			fieldtype: "Link",
 			options: "Company",
 			width: 100,
+			default: frappe.defaults.get_user_default("Company"),
+
 		},
 		{
 			fieldname: "from_date",
 			label: __("From Date"),
 			fieldtype: "Date",
 			width: 100,
-			// 'default':frappe.datetime.add_months(frappe.datetime.get_today(),-1)
+			'default':frappe.datetime.add_months(frappe.datetime.get_today(),-1)
 		},
 		{
 			fieldname: "to_date",
 			label: __("To Date"),
 			fieldtype: "Date",
 			width: 100,
-			// 'default':frappe.datetime.get_today()
+			'default':frappe.datetime.get_today()
 		},
 	],
 };
