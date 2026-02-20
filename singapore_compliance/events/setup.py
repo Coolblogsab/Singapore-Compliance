@@ -174,8 +174,6 @@ def create_charts_of_accounts(company):
 			}
 		).insert(ignore_permissions=True)
 
-	frappe.db.commit()
-
 
 def get_setup_wizard_stages(params=None):
 	# Run only during first setup
@@ -250,4 +248,3 @@ def update_gst_settings(params):
 
 	doc.flags.ignore_permissions = True
 	doc.save()
-	frappe.db.commit()

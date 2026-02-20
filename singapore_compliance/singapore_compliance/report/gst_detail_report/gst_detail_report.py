@@ -57,7 +57,7 @@ def get_data(filters=None):
 		or sgst_details[0].get("bank_interest_income")
 		or sgst_details[0].get("realised_exchange_gainloss")
 	):
-		jv_query = f"""
+		jv_query = """
 		SELECT
 			je.posting_date AS date,
 			'Journal Entry' AS transaction_type,
@@ -70,25 +70,36 @@ def get_data(filters=None):
 			`tabJournal Entry Account` AS jea on jea.parent=je.name
 
 		WHERE
-			jea.parent=je.name AND
-			(account = {frappe.db.escape(sgst_details[0].get('bank_interest_income'))} or
-			account = {frappe.db.escape(sgst_details[0].get('realised_exchange_gainloss'))}) and je.docstatus=1"""
+			je.docstatus = 1
+			AND (jea.account = %(bank_interest)s
+				OR jea.account = %(exchange_gain)s)
+		"""
+
+		params = {
+			"bank_interest": sgst_details[0].get("bank_interest_income"),
+			"exchange_gain": sgst_details[0].get("realised_exchange_gainloss"),
+		}
+		
 		if filters.company:
-			jv_query = f'''{jv_query} AND je.company="{filters.company}"'''
+			jv_query += " AND je.company = %(company)s"
+			params["company"] = filters.company
 
 		if from_date:
-			jv_query = f'''{jv_query} AND DATE(je.posting_date) >= "{from_date}"'''
-		if to_date:
-			jv_query = f'''{jv_query} AND DATE(je.posting_date) <= "{to_date}"'''
+			jv_query += " AND je.posting_date >= %(from_date)s"
+			params["from_date"] = from_date
 
-		jv_query = f"{jv_query} GROUP BY jea.account, je.name"
-		jv_data = frappe.db.sql(f"{jv_query}", as_dict=True)
+		if to_date:
+			jv_query += " AND je.posting_date <= %(to_date)s"
+			params["to_date"] = to_date
+
+		jv_query += " GROUP BY jea.account, je.name"
+		jv_data = frappe.db.sql(jv_query, params, as_dict=True)
 		total_jv = 0
 		for data in jv_data:
 			data["amount"] = -data.get("credit") or data.get("debit")
 			k = data.get("debit") - data.get("credit")
 			total_jv = total_jv + k
-		py_query = f"""
+		py_query = """
 			SELECT
 				pe.posting_date AS date,
 				'Payment Entry' AS transaction_type,
@@ -102,19 +113,30 @@ def get_data(filters=None):
 				`tabPayment Entry Deduction` AS ped on ped.parent=pe.name
 
 			WHERE
-				ped.parent=pe.name AND
-				(account = {frappe.db.escape(sgst_details[0].get('bank_interest_income'))} or
-				account = {frappe.db.escape(sgst_details[0].get('realised_exchange_gainloss'))}) and pe.docstatus=1"""
+				pe.docstatus = 1
+				AND (ped.account = %(bank_interest)s
+					OR ped.account = %(exchange_gain)s)
+		"""
+		params_py = {
+			"bank_interest": sgst_details[0].get("bank_interest_income"),
+			"exchange_gain": sgst_details[0].get("realised_exchange_gainloss"),
+		}
+
 		if filters.company:
-			py_query = f'''{py_query} AND pe.company="{filters.company}"'''
+			py_query += " AND pe.company = %(company)s"
+			params_py["company"] = filters.company
 
 		if from_date:
-			py_query = f'''{py_query} AND DATE(pe.posting_date) >= "{from_date}"'''
-		if to_date:
-			py_query = f'''{py_query} AND DATE(pe.posting_date) <= "{to_date}"'''
+			py_query += " AND pe.posting_date >= %(from_date)s"
+			params_py["from_date"] = from_date
 
-		query = f"{py_query} GROUP BY ped.account, pe.name"
-		py_data = frappe.db.sql(f"{py_query}", as_dict=True)
+		if to_date:
+			py_query += " AND pe.posting_date <= %(to_date)s"
+			params_py["to_date"] = to_date
+
+		py_query += " GROUP BY ped.account, pe.name"
+
+		py_data = frappe.db.sql(py_query, params_py, as_dict=True)
 		total_py = 0
 		for data in py_data:
 			k = data.get("amount")
@@ -136,15 +158,21 @@ def get_data(filters=None):
 		WHERE
 			st.parent=si.name AND si.docstatus = 1
 			"""
+		params_si = {}
+
 		if filters.company:
-			query = f'''{query} AND si.company="{filters.company}"'''
+			query += " AND si.company = %(company)s"
+			params_si["company"] = filters.company
 
 		if from_date:
-			query = f'''{query} AND DATE(si.posting_date) >= "{from_date}"'''
+			query += " AND si.posting_date >= %(from_date)s"
+			params_si["from_date"] = from_date
+
 		if to_date:
-			query = f'''{query} AND DATE(si.posting_date) <= "{to_date}"'''
-		query = f"{query} ORDER By si.name"
-		sql_data = frappe.db.sql(f"{query}", as_dict=True)
+			query += " AND si.posting_date <= %(to_date)s"
+			params_si["to_date"] = to_date
+
+		sql_data = frappe.db.sql(query, params_si, as_dict=True)
 		box_1 = [
 			{"transaction_type": "Box 1 Total value of standard-rated supplies (excluding GST)", "heading": 1}
 		]
@@ -200,8 +228,11 @@ def get_data(filters=None):
 					box_3.append(cp_dict)
 					box_3_total = box_3_total + cp_dict.get("amount")
 		# added jvtotal
-		box_3 = box_3 + jv_data if json.dumps(jv_data, default=str) else ""
-		box_3 = box_3 + py_data if json.dumps(py_data, default=str) else ""
+		if jv_data:
+			box_3.extend(jv_data)
+
+		if py_data:
+			box_3.extend(py_data)
 		box_3_total = box_3_total + total_jv + total_py
 		box_1_total_line = [
 			{
@@ -230,7 +261,7 @@ def get_data(filters=None):
 			{"transaction_type": "<b>Box 4 Total (Box 1, Box 2, Box 3)</b>", "heading": 1, "amount": total},
 		]
 
-		pi_query = f"""
+		pi_query = """
 		SELECT
 			p.posting_date AS date,
 			'Purchase Invoice' AS transaction_type,
@@ -245,19 +276,38 @@ def get_data(filters=None):
 			`tabPurchase Invoice` AS p,
 			`tabPurchase Taxes and Charges` AS pt
 		WHERE
-			pt.parent=p.name AND p.docstatus = 1 AND pt.parenttype = "Purchase Invoice" AND
-			pt.account_head in ("{sgst_details[0].get('box_5')}" , "{sgst_details[0].get('box_5_1')}" , "{sgst_details[0].get('box_5_2')}" , "{sgst_details[0].get('box_5_3')}")"""
+			pt.parent=p.name
+			AND p.docstatus = 1
+			AND pt.account_head IN %(accounts)s
+		"""
+
+		params_pi = {
+			"accounts": tuple(
+				acc for acc in [
+					sgst_details[0].get("box_5"),
+					sgst_details[0].get("box_5_1"),
+					sgst_details[0].get("box_5_2"),
+					sgst_details[0].get("box_5_3"),
+				]
+				if acc
+			)
+		}
 
 		if filters.company:
-			query = f'''{pi_query} AND p.company="{filters.company}"'''
+			pi_query += " AND p.company = %(company)s"
+			params_pi["company"] = filters.company
 
 		if from_date:
-			pi_query = f'''{pi_query} AND DATE(p.posting_date) >= "{from_date}"'''
-		if to_date:
-			pi_query = f'''{pi_query} AND DATE(p.posting_date) <= "{to_date}"'''
-		pi_query = f"{pi_query} ORDER By p.name"
+			pi_query += " AND p.posting_date >= %(from_date)s"
+			params_pi["from_date"] = from_date
 
-		p_sql_data = frappe.db.sql(f"{pi_query}", as_dict=True)
+		if to_date:
+			pi_query += " AND p.posting_date <= %(to_date)s"
+			params_pi["to_date"] = to_date
+
+		pi_query += " ORDER BY p.name"
+
+		p_sql_data = frappe.db.sql(pi_query, params_pi, as_dict=True)
 		box_5_balance_total = 0
 		box_7_balance_total = 0
 		box_5 = [
