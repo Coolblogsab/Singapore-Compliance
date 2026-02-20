@@ -205,8 +205,6 @@ def create_charts_of_accounts(company):
 	if params.get("chart_of_accounts") == "Singapore - F&B Chart of Accounts":
 		set_income_account(params)
 
-	frappe.db.commit()
-
 
 def get_setup_wizard_stages(params=None):
 	# Run only during first setup
@@ -377,4 +375,3 @@ def update_gst_settings(params):
 
 	doc.flags.ignore_permissions = True
 	doc.save()
-	frappe.db.commit()
