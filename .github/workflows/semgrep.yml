@@ -1,11 +1,11 @@
-name: Linters
+name: SEMGREP
 
 on:
   pull_request: { }
 
 jobs:
   linters:
-    name: Frappe Linter
+    name: Frappe Linter SEMGREP
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
